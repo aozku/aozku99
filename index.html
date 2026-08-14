@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التدريب الاحترافي المتكامل</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+        :root {
+            --bg-main: #0d0f12;
+            --bg-card: #161a20;
+            --bg-stripe: #1c2129;
+            --border-color: #262c36;
+            --accent-color: #e67e22;
+            --accent-hover: #d35400;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa5b5;
+            --text-muted: #6b7a8a;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --chest-color: rgba(231, 76, 60, 0.08);
+            --back-color: rgba(52, 152, 219, 0.08);
+            --shoulder-color: rgba(243, 156, 18, 0.08);
+            --legs-color: rgba(46, 204, 113, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(13, 15, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .navbar-brand {
+            font-size: 18pt;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand span {
+            color: var(--text-primary);
+            font-weight: 400;
+            font-size: 10pt;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 10pt;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .nav-link:hover {
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .nav-link.active {
+            background: var(--accent-color);
+            color: #0d0f12;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: fadeSlide 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #161a20 0%, #0d0f12 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-header h1 {
+            font-size: 24pt;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 .highlight {
+            color: var(--accent-color);
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 11pt;
+        }
+
+        /* ===== WEEK TABS ===== */
+        .week-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 14px 10px;
+            font-size: 11pt;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #0d0f12;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+        }
+
+        .week-intro {
+            background: var(--bg-card);
+            border-right: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            border-radius: 4px 12px 12px 4px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+            color: var(--text-secondary);
+        }
+
+        /* ===== DAY SECTIONS ===== */
+        .day-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .day-section:hover {
+            border-color: var(--accent-color);
+        }
+
+        .day-section.chest-day {
+            background: var(--chest-color);
+        }
+        .day-section.back-day {
+            background: var(--back-color);
+        }
+        .day-section.shoulder-day {
+            background: var(--shoulder-color);
+        }
+        .day-section.legs-day {
+            background: var(--legs-color);
+        }
+
+        .day-title {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .day-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        /* ===== TABLES ===== */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            background: #1c2129;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 10pt;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px;
+            font-size: 10.5pt;
+            color: #e4e7eb;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--bg-stripe);
+        }
+
+        .exercise-ar {
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .exercise-en {
+            font-size: 9pt;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 2px;
+            font-family: sans-serif;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 9.5pt;
+            text-align: center;
+        }
+
+        .badge-sets {
+            background: #202630;
+            color: #fff;
+            border: 1px solid #363f4f;
+        }
+
+        .badge-reps {
+            background: #172a21;
+            color: #52c41a;
+            border: 1px solid #234d35;
+        }
+
+        .rest-txt {
+            color: #fadb14;
+            font-weight: 500;
+        }
+
+        .notes-txt {
+            font-size: 9.5pt;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ===== YOUTUBE BUTTON ===== */
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff0000;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 9pt;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 4px;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-youtube svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .th-link {
+            width: 10%;
+            text-align: center !important;
+        }
+
+        /* ===== SUPERSET ===== */
+        .superset-row td {
+            border-right: 3px solid var(--danger);
+            background: rgba(231, 76, 60, 0.12) !important;
+        }
+
+        .superset-badge {
+            background: var(--danger);
+            color: #fff;
+            font-size: 8pt;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: 5px;
+            display: inline-block;
+        }
+
+        .drop-badge {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 9pt;
+        }
+
+        /* ===== WEEK INFO CARDS ===== */
+        .week-info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .week-info-section h2 {
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 18pt;
+            margin-bottom: 20px;
+        }
+
+        .week-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .week-info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .week-info-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+        }
+
+        .week-info-card .week-number {
+            font-size: 16pt;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .week-info-card .week-title {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .week-info-card .week-desc {
+            font-size: 9.5pt;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .week-info-card .week-goal {
+            font-size: 9pt;
+            color: var(--accent-color);
+            font-weight: 700;
+            display: block;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* ============================================================ */
+        /* ===== CARDIO PAGE ===== */
+        /* ============================================================ */
+        .cardio-warning {
+            background: rgba(231, 76, 60, 0.15);
+            border: 2px solid var(--danger);
+            border-radius: 14px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .cardio-warning h3 {
+            color: var(--danger);
+            font-size: 13pt;
+            margin-bottom: 4px;
+        }
+
+        .cardio-warning p {
+            color: var(--text-secondary);
+            font-size: 10.5pt;
+        }
+
+        .cardio-day {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .cardio-day:hover {
+            border-color: var(--accent-color);
+        }
+
+        .cardio-day .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cardio-day .day-header .day-name {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .cardio-day .day-header .day-badge {
+            background: var(--accent-color);
+            color: #0d0f12;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            font-weight: 700;
+        }
+
+        .cardio-exercise {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cardio-exercise:last-child {
+            border-bottom: none;
+        }
+
+        .cardio-exercise .ex-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .cardio-exercise .ex-detail {
+            color: var(--text-secondary);
+            font-size: 10pt;
+        }
+
+        .cardio-exercise .ex-detail .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .cardio-tips {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .cardio-tips h3 {
+            color: var(--accent-color);
+            font-size: 13pt;
+            margin-bottom: 10px;
+        }
+
+        .cardio-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cardio-tips ul li {
+            padding: 6px 0;
+            color: var(--text-secondary);
+            font-size: 10.5pt;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cardio-tips ul li:last-child {
+            border-bottom: none;
+        }
+
+        .cardio-tips ul li::before {
+            content: '🔥 ';
+            color: var(--accent-color);
+        }
+
+        /* ============================================================ */
+        /* ===== CHAT (ASSISTANT) PAGE ===== */
+        /* ============================================================ */
+        .chat-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 550px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 10.5pt;
+            line-height: 1.7;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .chat-msg.user {
+            align-self: flex-end;
+            background: var(--accent-color);
+            color: #0d0f12;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-msg.bot {
+            align-self: flex-start;
+            background: var(--bg-stripe);
+            color: #e4e7eb;
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chat-msg .source {
+            display: block;
+            margin-top: 8px;
+            font-size: 9pt;
+            color: var(--accent-color);
+            font-weight: 700;
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+        }
+
+        .chat-msg .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .chat-msg .quick-reply-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .chat-msg .quick-reply-btn:hover {
+            border-color: var(--accent-color);
+            color: #fff;
+            background: var(--accent-color);
+        }
+
+        .chat-msg .typing {
+            display: inline-flex;
+            gap: 4px;
+        }
+        .chat-msg .typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.2s infinite;
+        }
+        .chat-msg .typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .chat-msg .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-main);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 11pt;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+
+        .chat-input-area input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+
+        .chat-input-area input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-input-area .btn-send {
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: #0d0f12;
+            border: none;
+            border-radius: 10px;
+            font-size: 11pt;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .chat-input-area .btn-send:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+        }
+
+        .chat-input-area .btn-clear {
+            padding: 12px 16px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 10px;
+            font-size: 10pt;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .chat-input-area .btn-clear:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* ===== TIPS PAGE ===== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tip-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .tip-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tip-card .tip-icon {
+            font-size: 28pt;
+            margin-bottom: 10px;
+        }
+
+        .tip-card h3 {
+            color: var(--accent-color);
+            font-size: 13pt;
+            margin-bottom: 8px;
+        }
+
+        .tip-card p {
+            color: var(--text-secondary);
+            font-size: 10.5pt;
+        }
+
+        .tip-of-day {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            border-radius: 14px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .tip-of-day h2 {
+            font-size: 14pt;
+            margin-bottom: 6px;
+        }
+
+        .tip-of-day p {
+            font-size: 12pt;
+            opacity: 0.95;
+        }
+
+        /* ===== CALCULATOR ===== */
+        .calc-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .calc-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .calc-form label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 10.5pt;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .calc-form input,
+        .calc-form select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 11pt;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+            margin-bottom: 16px;
+        }
+
+        .calc-form input:focus,
+        .calc-form select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+
+        .calc-form .btn-calc {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-color);
+            color: #0d0f12;
+            border: none;
+            border-radius: 10px;
+            font-size: 12pt;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .calc-form .btn-calc:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+        }
+
+        .calc-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            align-content: start;
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .result-card:hover {
+            border-color: var(--accent-color);
+        }
+
+        .result-card .number {
+            font-size: 22pt;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .result-card .label {
+            font-size: 9.5pt;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px 16px;
+            }
+
+            .navbar-brand {
+                font-size: 14pt;
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 9pt;
+            }
+
+            .week-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-header h1 {
+                font-size: 18pt;
+            }
+
+            .calc-container {
+                grid-template-columns: 1fr;
+            }
+
+            .calc-results {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            td,
+            th {
+                padding: 8px;
+                font-size: 9pt;
+            }
+
+            .btn-youtube {
+                padding: 2px 8px;
+                font-size: 8pt;
+            }
+
+            .btn-youtube svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .day-title {
+                font-size: 12pt;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .chat-container {
+                height: 450px;
+            }
+            .chat-msg {
+                max-width: 92%;
+                font-size: 10pt;
+                padding: 12px 14px;
+            }
+            .chat-input-area {
+                flex-wrap: wrap;
+            }
+            .chat-input-area input {
+                flex: 1 1 100%;
+            }
+            .chat-input-area .btn-send {
+                flex: 1;
+            }
+            .chat-input-area .btn-clear {
+                flex: 0 0 auto;
+            }
+
+            .week-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cardio-exercise {
+                grid-template-columns: 1fr;
+                gap: 4px;
+                padding: 8px 0;
+            }
+            .cardio-exercise .ex-detail {
+                font-size: 9.5pt;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 4px;
+            }
+            .nav-link {
+                padding: 4px 10px;
+                font-size: 8.5pt;
+            }
+            .calc-results {
+                grid-template-columns: 1fr;
+            }
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            .week-tabs {
+                grid-template-columns: 1fr 1fr;
+            }
+            .chat-container {
+                height: 400px;
+            }
+            .week-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand" onclick="showPage('home')">🏋️ نظام التدريب <span>الاحترافي</span></a>
+        <div class="nav-links">
+            <button class="nav-link active" onclick="showPage('home')">الجدول</button>
+            <button class="nav-link" onclick="showPage('cardio')">🏋️ AOZKU</button>
+            <button class="nav-link" onclick="showPage('tips')">💡 نصائح</button>
+            <button class="nav-link" onclick="showPage('calc')">🧮 احتياجاتي</button>
+            <button class="nav-link" onclick="showPage('chat')">🤖 اسألني</button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- ============================================================ -->
+        <!-- ===== PAGE: HOME ===== -->
+        <!-- ============================================================ -->
+        <div id="page-home" class="page active">
+
+            <div class="page-header">
+                <h1>نظام التدريب <span class="highlight">الاحترافي الفاخر</span></h1>
+                <p>تقسيم متكامل وموزع على 4 أسابيع منفصلة لتحقيق أقصى استجابة عضلية</p>
+            </div>
+
+            <!-- Week Tabs -->
+            <div class="week-tabs">
+                <button class="tab-btn active" onclick="openWeek(event, 'week1')">📅 الأسبوع 1</button>
+                <button class="tab-btn" onclick="openWeek(event, 'week2')">📅 الأسبوع 2</button>
+                <button class="tab-btn" onclick="openWeek(event, 'week3')">📅 الأسبوع 3</button>
+                <button class="tab-btn" onclick="openWeek(event, 'week4')">📅 الأسبوع 4</button>
+            </div>
+
+            <!-- WEEK 1 -->
+            <div id="week1" class="week-page active">
+                <div class="week-intro">
+                    <strong>الأسبوع الأول: الأوزان الحرة (Free Weights Only)</strong><br>
+                    الاعتماد بالكامل على الدمبلز والبارات لتفعيل عضلات التثبيت وبناء القوة الأساسية.
+                </div>
+
+                <!-- DAY 1: Chest -->
+                <div class="day-section chest-day">
+                    <div class="day-title">اليوم الأول: صدر وتراي (Chest & Triceps)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التمرين</th>
+                                    <th style="width:10%; text-align:center;">الجولات</th>
+                                    <th style="width:13%; text-align:center;">التكرارات</th>
+                                    <th style="width:16%; text-align:center;">الراحة</th>
+                                    <th style="width:18%;">توجيه التكنيك</th>
+                                    <th class="th-link">📺</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="exercise-ar">بنش برس بالبار مستوي</span><span class="exercise-en">Barbell Bench Press</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">8 - 10</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2.5 - 3 دقائق</td>
+                                    <td class="notes-txt">تركيز على القوة الأساسية</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Barbell Bench Press')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تجميع صدر مائل بالدمبلز</span><span class="exercise-en">Incline DB Press</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">استهداف الصدر العلوي</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Incline Dumbbell Press')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تفتيح بالدمبلز على بنش مستوي</span><span class="exercise-en">Flat DB Flyes</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">عزل وتمديد كامل للألياف</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Dumbbell Chest Fly')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">سكال كراشرز بالبار الزاوية</span><span class="exercise-en">EZ-Bar Skull Crushers</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">تفعيل الرأس الطويل للتراي</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Skull Crushers')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تمديد التراي بالدمبل خلف الرأس جالس</span><span class="exercise-en">Seated DB Overhead Extension</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 - 90 ثانية</td>
+                                    <td class="notes-txt">مدى حركي كامل وأمان للمرفق</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Overhead Triceps Extension')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DAY 2: Back -->
+                <div class="day-section back-day">
+                    <div class="day-title">اليوم الثاني: ظهر وباي (Back & Biceps)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التمرين</th>
+                                    <th style="width:10%; text-align:center;">الجولات</th>
+                                    <th style="width:13%; text-align:center;">التكرارات</th>
+                                    <th style="width:16%; text-align:center;">الراحة</th>
+                                    <th style="width:18%;">توجيه التكنيك</th>
+                                    <th class="th-link">📺</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="exercise-ar">سحب دمبل فردي منشار</span><span class="exercise-en">Single-Arm DB Row</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">8 - 10</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">تركيز وتفعيل منفصل لكل جهة</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Single Arm Dumbbell Row')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">سحب بالبار والصدر مدعوم على بنش مائل</span><span class="exercise-en">Chest-Supported Barbell Row</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">8 - 10</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">عزل تام لعضلات الظهر وحماية القطنية</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Chest Supported Row')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">دمبل بلوفر مستلقي على البنش</span><span class="exercise-en">Dumbbell Pullover</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">توسيع القفص الصدري واستهداف اللاتس</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Dumbbell Pullover')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">رفرفة خلفي بالدمبلز والصدر مدعوم</span><span class="exercise-en">Chest-Supported Rear Delt Flyes</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 - 90 ثانية</td>
+                                    <td class="notes-txt">عزل تام للكتف الخلفي بدون أرجحة</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Rear Delt Fly')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تمرجح بالبار الزاوية واقف</span><span class="exercise-en">EZ-Bar Bicep Curl</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">حمل قوي للباي وحماية للمعصم</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('EZ Bar Curl')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تجميع دمبلز مائل جالس</span><span class="exercise-en">Incline Dumbbell Curl</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">وضع استطالة ممتاز للرأس الطويل</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Incline Dumbbell Curl')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">تبادل هامر بالدمبلز</span><span class="exercise-en">Dumbbell Hammer Curl</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 - 90 ثانية</td>
+                                    <td class="notes-txt">استهداف العضلة العضدية والساعد</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Hammer Curl')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DAY 3: Shoulders -->
+                <div class="day-section shoulder-day">
+                    <div class="day-title">اليوم الثالث: كتف وترباس (Shoulders & Traps)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التمرين</th>
+                                    <th style="width:10%; text-align:center;">الجولات</th>
+                                    <th style="width:13%; text-align:center;">التكرارات</th>
+                                    <th style="width:16%; text-align:center;">الراحة</th>
+                                    <th style="width:18%;">توجيه التكنيك</th>
+                                    <th class="th-link">📺</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="exercise-ar">ضغط كتف بالدمبلز جالس</span><span class="exercise-en">Seated DB Shoulder Press</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">8 - 10</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">تطوير الحجم للكتف الأمامي</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Seated Dumbbell Shoulder Press')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">رفرفة جانبي بالدمبلز جالس</span><span class="exercise-en">Seated DB Lateral Raise</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 - 90 ثانية</td>
+                                    <td class="notes-txt">الجلوس يمنع الغش الحركي تماماً</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Seated Lateral Raise')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">رفرفة خلفي بالدمبلز جالس مع انحناء الجذع</span><span class="exercise-en">Seated Bent-Over Rear Delt Raise</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 - 90 ثانية</td>
+                                    <td class="notes-txt">تركيز عالي على عمق الكتف الخلفي</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Bent Over Rear Delt Raise')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">هز أكتاف بالدمبلز واقف</span><span class="exercise-en">Dumbbell Shrugs</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">مع ثبات ثانية في الأعلى لانقباض شديد</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Dumbbell Shrugs')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">سحب بار عمودي قبضة واسعة</span><span class="exercise-en">Wide-Grip Barbell Upright Row</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">90 ثانية</td>
+                                    <td class="notes-txt">لمنتصف الصدر فقط لحماية الأوتار</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Upright Row')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DAY 4: Legs -->
+                <div class="day-section legs-day">
+                    <div class="day-title">اليوم الرابع: أرجل وبطن (Legs & Abs)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التمرين</th>
+                                    <th style="width:10%; text-align:center;">الجولات</th>
+                                    <th style="width:13%; text-align:center;">التكرارات</th>
+                                    <th style="width:16%; text-align:center;">الراحة</th>
+                                    <th style="width:18%;">توجيه التكنيك</th>
+                                    <th class="th-link">📺</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="exercise-ar">سكوات بالبار خلفي</span><span class="exercise-en">Barbell Back Squat</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">8 - 10</span></td>
+                                    <td style="text-align:center;" class="rest-txt">3 دقائق</td>
+                                    <td class="notes-txt">التمرين الأساسي لكتلة عضلية أقوى</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Barbell Back Squat')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">طعن بالدمبلز مسافة قصيرة</span><span class="exercise-en">Dumbbell Walking Lunges</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">التكرارات محسوبة لكل رجل بشكل مستقل</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Walking Lunges')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">الرفعة الرومانية بالدمبلز</span><span class="exercise-en">Dumbbell Romanian Deadlift</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">10 - 12</span></td>
+                                    <td style="text-align:center;" class="rest-txt">2 دقيقة</td>
+                                    <td class="notes-txt">نزول لمنتصف الساق وأمان كامل للقطنية</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Romanian Deadlift')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">رفع البطات بالدمبل واقف فردي</span><span class="exercise-en">Single-Arm DB Calf Raise</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">4</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">15 - 20</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 ثانية</td>
+                                    <td class="notes-txt">عزل وتركيز عميق لكل جانب على حدة</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Calf Raise')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">طحن البطن على الأرض</span><span class="exercise-en">Abs Crunches</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">15 - 20</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 ثانية</td>
+                                    <td class="notes-txt">انقباض شديد لعضلات البطن العلوية</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Crunches')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="exercise-ar">رفع الأرجل مستلقياً</span><span class="exercise-en">Lying Leg Raises</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-sets">3</span></td>
+                                    <td style="text-align:center;"><span class="badge badge-reps">12 - 15</span></td>
+                                    <td style="text-align:center;" class="rest-txt">60 ثانية</td>
+                                    <td class="notes-txt">تركيز كامل على عضلات البطن السفلية</td>
+                                    <td style="text-align:center;"><button class="btn-youtube" onclick="searchYT('Leg Raises')"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.498 6.186c-.346-1.303-1.362-2.319-2.665-2.665C19.177 2.999 12 2.999 12 2.999s-7.177 0-8.833.522C1.864 3.867.848 4.883.502 6.186.146 7.519.146 9.999.146 9.999s0 2.48.356 3.813c.346 1.303 1.362 2.319 2.665 2.665 1.656.522 8.833.522 8.833.522s7.177 0 8.833-.522c1.303-.346 2.319-1.362 2.665-2.665.356-1.333.356-3.813.356-3.813s0-2.48-.356-3.813zm-13.982 7.808v-6.99l5.986 3.495-5.986 3.495z"/></svg></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px 20px; margin-top: 10px; text-align: center;">
+                    <p style="color: var(--accent-color); font-weight: 700;">🔥 <span style="color:#fff;">تمرين الحرق النهائي (Finisher):</span> بعد التمرين، قم بـ 100 تكرار سكوات بالوزن الفارغ أو 50 تكرار ضغط دمبل خفيف لتحفيز الألياف العميقة!</p>
+                </div>
+            </div>
+
+            <!-- WEEK 2 -->
+            <div id="week2" class="week-page">
+                <div class="week-intro">
+                    <strong>الأسبوع الثاني: أجهزة الكيابل (Cables Only + أجهزة أرجل مرتكزة)</strong><br>
+                    مقاومة مستمرة طوال المدى الحركي مع عزل شديد وأمان فائق للمفاصل والأوتار.
+                </div>
+                <div style="text-align:center; padding:30px; color:var(--text-secondary);">
+                    <p style="font-size:14pt; font-weight:700; color:var(--accent-color);">📌 الأسبوع الثاني</p>
+                    <p>سيتم إكمال جميع أيام هذا الأسبوع بنفس هيكل الأسبوع الأول مع تمارين الكيابل.</p>
+                    <p style="margin-top:10px; font-size:11pt;">سيتم إكمال جميع أيام الأسبوع الثاني والثالث والرابع في التحديث القادم.</p>
+                </div>
+            </div>
+
+            <!-- WEEK 3 -->
+            <div id="week3" class="week-page">
+                <div class="week-intro">
+                    <strong>الأسبوع الثالث: أجهزة الوزن الثابت (Pin-loaded Machines)</strong><br>
+                    أجهزة المسار الثابت المعتمدة على المسمار لعزل العضلة المستهدفة تماماً وتقليل تدخل العضلات المساعدة.
+                </div>
+                <div style="text-align:center; padding:30px; color:var(--text-secondary);">
+                    <p style="font-size:14pt; font-weight:700; color:var(--accent-color);">📌 الأسبوع الثالث</p>
+                    <p>سيتم إكمال جميع أيام هذا الأسبوع بنفس هيكل الأسبوع الأول مع تمارين الأجهزة الثابتة.</p>
+                </div>
+            </div>
+
+            <!-- WEEK 4 -->
+            <div id="week4" class="week-page">
+                <div class="week-intro">
+                    <strong>الأسبوع الرابع: الشدة القصوى (Super Sets & Drop Sets)</strong><br>
+                    أسبوع تفجير الألياف العضلية وضخ الدم لأعلى مستوياته عبر إنهاء الدورة بالتكنيكات المتقدمة لكسر الثبات العضلي.
+                </div>
+                <div style="background: rgba(230, 126, 34, 0.15); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 20px; text-align: center;">
+                    <p style="color: #fff; font-weight: 700;">⚠️ <span style="color: var(--accent-color);">تنبيه هام:</span> هذا الأسبوع مخصص للمحترفين فقط. يُنصح بتقليل عدد أيام التدريب إلى 3 أيام وزيادة ساعات النوم.</p>
+                </div>
+                <div style="text-align:center; padding:30px; color:var(--text-secondary);">
+                    <p style="font-size:14pt; font-weight:700; color:var(--accent-color);">📌 الأسبوع الرابع</p>
+                    <p>سيتم إكمال جميع أيام هذا الأسبوع مع الـ Supersets و Drop Sets.</p>
+                </div>
+            </div>
+
+            <!-- WEEK INFO SECTION -->
+            <div class="week-info-section">
+                <h2>📋 نبذة عن كل أسبوع تدريبي</h2>
+                <div class="week-info-grid">
+                    <div class="week-info-card">
+                        <span class="week-number">الأسبوع 1</span>
+                        <span class="week-title">🏋️ الأوزان الحرة</span>
+                        <span class="week-desc">تمارين بالبار والدمبلز لبناء القوة الأساسية وتفعيل العضلات المثبتة.</span>
+                        <span class="week-goal">🎯 الهدف: بناء القوة العصبية والتوازن</span>
+                    </div>
+                    <div class="week-info-card">
+                        <span class="week-number">الأسبوع 2</span>
+                        <span class="week-title">🔗 أجهزة الكيابل</span>
+                        <span class="week-desc">مقاومة مستمرة طوال المدى الحركي لعزل العضلات وحماية المفاصل.</span>
+                        <span class="week-goal">🎯 الهدف: زيادة زمن التوتر (TUT) والتحمل العضلي</span>
+                    </div>
+                    <div class="week-info-card">
+                        <span class="week-number">الأسبوع 3</span>
+                        <span class="week-title">⚙️ الأجهزة الثابتة</span>
+                        <span class="week-desc">مسارات ثابتة لعزل تام للعضلة المستهدفة مع أقصى أمان.</span>
+                        <span class="week-goal">🎯 الهدف: التضخيم العضلي (Hypertrophy) بأوزان عالية</span>
+                    </div>
+                    <div class="week-info-card">
+                        <span class="week-number">الأسبوع 4</span>
+                        <span class="week-title">💥 الشدة القصوى</span>
+                        <span class="week-desc">سوبرست و دروب ست لكسر الثبات العضلي وتفجير الألياف.</span>
+                        <span class="week-goal">🎯 الهدف: الضخ العضلي وكسر الروتين (المحترفين فقط)</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ===== END PAGE HOME ===== -->
+
+        <!-- ============================================================ -->
+        <!-- ===== PAGE: CARDIO (AOZKU) ===== -->
+        <!-- ============================================================ -->
+        <div id="page-cardio" class="page">
+            <div class="page-header">
+                <h1>🏋️ نظام تدريب <span class="highlight">AOZKU</span></h1>
+                <p>برنامج كارديو متكامل باستخدام أجهزة الجيم فقط (بدون دراجة هوائية أو مسبح)</p>
+            </div>
+
+            <div class="cardio-warning">
+                <h3>⚠️ تنبيهات هامة قبل البدء</h3>
+                <p>• استشر طبيبك قبل بدء أي برنامج تدريبي جديد.<br>
+                • ابدأ تدريجياً ولا ترهق نفسك في الأيام الأولى.<br>
+                • حافظ على شرب الماء بكميات كافية (2-3 لتر يومياً).<br>
+                • توقف فوراً إذا شعرت بألم أو دوخة.</p>
+            </div>
+
+            <!-- Day 1 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم الأول: جهاز المشي (ميلان)</span>
+                    <span class="day-badge">⏱️ 30 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 جهاز المشي الكهربائي (Treadmill)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">25 دقيقة</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">5-6 كم/ساعة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">📐 الميلان</span>
+                    <span class="ex-detail">درجة الميلان: <span class="highlight">5-8 درجة</span></span>
+                    <span class="ex-detail">الهدف: <span class="highlight">زيادة الحرق وشد المؤخرة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">أرجل + ظهر</span></span>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم الثاني: جهاز التجديف + مشي</span>
+                    <span class="day-badge">⏱️ 35 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚣 جهاز التجديف (Rowing Machine)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">15 دقيقة</span></span>
+                    <span class="ex-detail">المقاومة: <span class="highlight">متوسطة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 جهاز المشي الكهربائي</span>
+                    <span class="ex-detail">المدة: <span class="highlight">15 دقيقة</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">5-6 كم/ساعة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">ظهر + أكتاف</span></span>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم الثالث: الأوربت تراك + تمارين وزن جسم</span>
+                    <span class="day-badge">⏱️ 35 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 جهاز الأوربت تراك (Elliptical)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">20 دقيقة</span></span>
+                    <span class="ex-detail">المقاومة: <span class="highlight">خفيفة إلى متوسطة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🏋️ تمارين وزن جسم (دائري)</span>
+                    <span class="ex-detail">التمارين: <span class="highlight">قرفصاء، ضغط، تمرين بطن</span></span>
+                    <span class="ex-detail">الجولات: <span class="highlight">3 جولات × 12 تكرار</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">كامل الجسم</span></span>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم الرابع: مشي سريع (ركض خفيف)</span>
+                    <span class="day-badge">⏱️ 30 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🏃 جهاز المشي (ركض خفيف)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">20 دقيقة</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">7-8 كم/ساعة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 تبريد (مشي بطيء)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">3-4 كم/ساعة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">أرجل + أوتار الركبة</span></span>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم الخامس: تدريب دائري (كارديو + مقاومة)</span>
+                    <span class="day-badge">⏱️ 40 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 جهاز الأوربت تراك</span>
+                    <span class="ex-detail">المدة: <span class="highlight">10 دقائق</span></span>
+                    <span class="ex-detail">المقاومة: <span class="highlight">متوسطة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🏋️ تمارين دائري (وزن جسم + كيابل خفيفة)</span>
+                    <span class="ex-detail">التمارين: <span class="highlight">سكوات، ضغط، كيابل خفيفة، بلانك</span></span>
+                    <span class="ex-detail">الجولات: <span class="highlight">4 جولات × 12 تكرار</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 جهاز المشي (ميلان)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">10 دقائق</span></span>
+                    <span class="ex-detail">الميلان: <span class="highlight">5 درجة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">كامل الجسم</span></span>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="cardio-day">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم السادس: مشي مكثف (ميلان عالي)</span>
+                    <span class="day-badge">⏱️ 35 دقيقة</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 جهاز المشي (ميلان عالي)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">25 دقيقة</span></span>
+                    <span class="ex-detail">الميلان: <span class="highlight">8-10 درجة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 تبريد (مشي بطيء)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">3-4 كم/ساعة</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🔄 إطالات خفيفة</span>
+                    <span class="ex-detail">مدة: <span class="highlight">5 دقائق</span></span>
+                    <span class="ex-detail">تركيز: <span class="highlight">أرجل + ظهر</span></span>
+                </div>
+            </div>
+
+            <!-- Day 7: Rest -->
+            <div class="cardio-day" style="border-color: var(--success);">
+                <div class="day-header">
+                    <span class="day-name">📅 اليوم السابع: راحة نشطة</span>
+                    <span class="day-badge">🔄 استشفاء</span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🧘 تمارين تنفس واسترخاء</span>
+                    <span class="ex-detail">المدة: <span class="highlight">10-15 دقيقة</span></span>
+                    <span class="ex-detail">التركيز: <span class="highlight">استشفاء عضلي وعصبي</span></span>
+                </div>
+                <div class="cardio-exercise">
+                    <span class="ex-name">🚶 مشي خفيف (في الجيم أو الخارج)</span>
+                    <span class="ex-detail">المدة: <span class="highlight">15-20 دقيقة</span></span>
+                    <span class="ex-detail">السرعة: <span class="highlight">مشي عادي</span></span>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="cardio-tips">
+                <h3>🔥 نصائح ذهبية لتعزيز حرق الدهون</h3>
+                <ul>
+                    <li>اشرب 2-3 لتر ماء يومياً للحفاظ على معدل الحرق.</li>
+                    <li>مارس الكارديو صباحاً على معدة فارغة لحرق الدهون المخزنة.</li>
+                    <li>حافظ على معدل ضربات قلبك بين 60-75% من الحد الأقصى (220 - العمر).</li>
+                    <li>لا تهمل تمارين المقاومة (الأوزان) لأنها تزيد التمثيل الغذائي.</li>
+                    <li>النوم 7-8 ساعات يومياً ضروري لحرق الدهون.</li>
+                    <li>تجنب السكر المضاف والوجبات المصنعة قدر الإمكان.</li>
+                    <li>زد من تناول البروتين للحفاظ على العضلات أثناء التنشيف.</li>
+                </ul>
+            </div>
+
+            <!-- ===== حساباتي (مع الروابط) ===== -->
+            <div style="background: var(--bg-card); border: 2px solid var(--accent-color); border-radius: 16px; padding: 30px; margin-top: 30px; text-align: center;">
+                <h2 style="color: var(--accent-color); font-size: 18pt; margin-bottom: 10px;">📱 حساباتي</h2>
+                <p style="color: var(--text-secondary); font-size: 11pt; margin-bottom: 15px;">تابعني على منصات التواصل الاجتماعي للاستفادة من المزيد من النصائح والبرامج التدريبية</p>
+
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://www.instagram.com/aozku63/" target="_blank" style="background: #E4405F; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; transition: all 0.3s;">📸 إنستغرام</a>
+                    <a href="https://t.me/aozku" target="_blank" style="background: #0088cc; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; transition: all 0.3s;">✈️ تيلغرام</a>
+                    <a href="https://wa.me/message/4WGWUYLNAM62G1" target="_blank" style="background: #25D366; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; transition: all 0.3s;">💬 واتساب</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- ===== END PAGE CARDIO ===== -->
+
+        <!-- ============================================================ -->
+        <!-- ===== PAGE: TIPS ===== -->
+        <!-- ============================================================ -->
+        <div id="page-tips" class="page">
+            <div class="page-header">
+                <h1>💡 نصائح <span class="highlight">ذهبية</span></h1>
+                <p>نصائح غذائية، تدريبية، ونوم لتحقيق أقصى استفادة من برنامجك التدريبي</p>
+            </div>
+
+            <div class="tip-of-day" id="tipOfDay">
+                <h2>🌟 نصيحة اليوم</h2>
+                <p id="dailyTip">جاري تحميل النصيحة...</p>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">🍗</div>
+                    <h3>البروتين الذكي</h3>
+                    <p>وزع بروتينك على 5-6 وجبات يومياً، كل وجبة 20-30 جرام بروتين. الجسم لا يمتص أكثر من 30 جرام في الوجبة.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">💧</div>
+                    <h3>ترطيب العضلات</h3>
+                    <p>اشرب 200-300 مل ماء قبل التمرين بـ 15 دقيقة. الجفاف يقلل الأداء بنسبة 20%.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">😴</div>
+                    <h3>النوم العميق</h3>
+                    <p>نم قبل الساعة 11 مساءً لمدة 7-8 ساعات. هرمون النمو يبلغ ذروته بين 11م و 2ص.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🏋️</div>
+                    <h3>التدريب تحت السيطرة</h3>
+                    <p>استخدم قاعدة 2-1-2: ثانيتين نزول، توقف ثانية، ثانية صعود، توقف ثانية. هذا يزيد زمن التوتر ويضاعف النتيجة.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">📈</div>
+                    <h3>التحميل التدريجي</h3>
+                    <p>إذا أنهيت جميع الجولات بنجاح، أضف 2.5 كجم فقط في التمرين التالي. التحميل الزائد التدريجي هو مفتاح النمو.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🧠</div>
+                    <h3>العقل العضلي</h3>
+                    <p>أغمض عينيك في التكرارات الأخيرة وركز على الشعور بالعضلة وهي تنقبض. هذا يزيد التوصيل العصبي بنسبة 30%.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🔄</div>
+                    <h3>التناوب الزاوي</h3>
+                    <p>كل شهر، بدّل التمارين الأساسية بتمارين مشابهة بزاوية مختلفة (مثل: بدل البنش المسطح، العب بنش مائل).</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">⏰</div>
+                    <h3>نافذة التغذية</h3>
+                    <p>خلال 45 دقيقة من التمرين، تناول بروتين سريع مع كربوهيدرات بسيطة (موزة أو عسل) لاستغلال نافذة البناء العضلي.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== PAGE: CALCULATOR ===== -->
+        <!-- ============================================================ -->
+        <div id="page-calc" class="page">
+            <div class="page-header">
+                <h1>🧮 حاسبة <span class="highlight">الاحتياجات</span></h1>
+                <p>أدخل بياناتك لتحصل على احتياجاتك اليومية من السعرات والبروتين والكربوهيدرات والدهون والماء</p>
+            </div>
+
+            <div class="calc-container">
+                <div class="calc-form">
+                    <label>الجنس</label>
+                    <select id="gender">
+                        <option value="male">ذكر</option>
+                        <option value="female">أنثى</option>
+                    </select>
+
+                    <label>العمر (سنوات)</label>
+                    <input type="number" id="age" value="25" min="15" max="80">
+
+                    <label>الطول (سم)</label>
+                    <input type="number" id="height" value="175" min="100" max="250">
+
+                    <label>الوزن (كجم)</label>
+                    <input type="number" id="weight" value="70" min="30" max="200">
+
+                    <label>مستوى النشاط</label>
+                    <select id="activity">
+                        <option value="1.2">خامل (قليل الحركة)</option>
+                        <option value="1.375" selected>خفيف (تمرين 1-3 أيام)</option>
+                        <option value="1.55">متوسط (تمرين 3-5 أيام)</option>
+                        <option value="1.725">نشط (تمرين 6-7 أيام)</option>
+                        <option value="1.9">نشط جداً (تمرين مكثف يومياً)</option>
+                    </select>
+
+                    <label>الهدف</label>
+                    <select id="goal">
+                        <option value="maintain">المحافظة على الوزن</option>
+                        <option value="gain" selected>زيادة الوزن (تضخيم)</option>
+                        <option value="lose">فقدان الوزن (تنشيف)</option>
+                    </select>
+
+                    <button class="btn-calc" onclick="calculateNeeds()">📊 احسب احتياجاتي</button>
+                </div>
+
+                <div class="calc-results" id="calcResults">
+                    <div class="result-card"><span class="number" id="resCalories">---</span><span class="label">السعرات اليومية</span></div>
+                    <div class="result-card"><span class="number" id="resProtein">---</span><span class="label">البروتين (جرام)</span></div>
+                    <div class="result-card"><span class="number" id="resCarbs">---</span><span class="label">الكربوهيدرات (جرام)</span></div>
+                    <div class="result-card"><span class="number" id="resFat">---</span><span class="label">الدهون (جرام)</span></div>
+                    <div class="result-card"><span class="number" id="resWater">---</span><span class="label">الماء (لتر)</span></div>
+                    <div class="result-card"><span class="number" id="resMeals">---</span><span class="label">عدد الوجبات</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== PAGE: CHAT (ASSISTANT) ===== -->
+        <!-- ============================================================ -->
+        <div id="page-chat" class="page">
+            <div class="page-header">
+                <h1>🤖 اسألني <span class="highlight">عن التدريب والتغذية</span></h1>
+                <p>إجابات موثقة من Mussel Clinic و Farmistan، مع قنوات يوتيوب موصى بها</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا..." onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button class="btn-send" onclick="sendMessage()">إرسال ✉️</button>
+                    <button class="btn-clear" onclick="clearChat()" title="مسح المحادثة">🗑️</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- ===== END CONTAINER ===== -->
+
+    <script>
+        // ================================================================
+        // ===== NAVIGATION =====
+        // ================================================================
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                if (btn.textContent.includes('الجدول') && page === 'home') btn.classList.add('active');
+                if (btn.textContent.includes('AOZKU') && page === 'cardio') btn.classList.add('active');
+                if (btn.textContent.includes('نصائح') && page === 'tips') btn.classList.add('active');
+                if (btn.textContent.includes('احتياجاتي') && page === 'calc') btn.classList.add('active');
+                if (btn.textContent.includes('اسألني') && page === 'chat') btn.classList.add('active');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // ===== WEEK TABS =====
+        // ================================================================
+        function openWeek(evt, weekName) {
+            document.querySelectorAll('.week-page').forEach(w => w.classList.remove('active'));
+            document.getElementById(weekName).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            evt.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // ===== YOUTUBE SEARCH =====
+        // ================================================================
+        function searchYT(query) {
+            window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent(query + ' exercise form'), '_blank');
+        }
+
+        // ================================================================
+        // ===== TIPS =====
+        // ================================================================
+        const tips = [
+            "وزع بروتينك على 5-6 وجبات يومياً، كل وجبة 20-30 جرام بروتين. الجسم لا يمتص أكثر من 30 جرام في الوجبة.",
+            "اشرب 200-300 مل ماء قبل التمرين بـ 15 دقيقة. الجفاف يقلل الأداء بنسبة 20%.",
+            "نم قبل الساعة 11 مساءً. هرمون النمو يبلغ ذروته بين 11م و 2ص.",
+            "استخدم قاعدة 2-1-2 في التمرين: ثانيتين نزول، توقف ثانية، ثانية صعود، توقف ثانية.",
+            "إذا أنهيت جميع الجولات بنجاح، أضف 2.5 كجم فقط في التمرين التالي.",
+            "أغمض عينيك في التكرارات الأخيرة وركز على العضلة المنقبضة. يزيد التوصيل العصبي 30%.",
+            "كل شهر، بدّل التمارين الأساسية بتمارين مشابهة بزاوية مختلفة لكسر الثبات العضلي.",
+            "خلال 45 دقيقة من التمرين، تناول بروتين سريع مع كربوهيدرات بسيطة لاستغلال نافذة البناء.",
+            "سجل كل تمرين ووزن وتكرارات. هدفك الأسبوع القادم زيادة تكرار واحد في تمرين واحد على الأقل.",
+            "خذ أسبوع راحة نشطة كل 4-6 أسابيع: اخفض الأوزان 50% والجولات للنصف للتعافي العصبي."
+        ];
+
+        function setDailyTip() {
+            const dayIndex = new Date().getDate() % tips.length;
+            document.getElementById('dailyTip').textContent = tips[dayIndex];
+        }
+        setDailyTip();
+
+        // ================================================================
+        // ===== CALCULATOR =====
+        // ================================================================
+        function calculateNeeds() {
+            const gender = document.getElementById('gender').value;
+            const age = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+            const goal = document.getElementById('goal').value;
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            let tdee = bmr * activity;
+            if (goal === 'gain') tdee += 300;
+            else if (goal === 'lose') tdee -= 300;
+
+            const protein = Math.round(weight * 1.8);
+            const fat = Math.round(weight * 0.9);
+            const proteinCal = protein * 4;
+            const fatCal = fat * 9;
+            const remainingCal = tdee - proteinCal - fatCal;
+            const carbs = Math.round(remainingCal / 4);
+            const water = Math.round(weight * 0.033 * 10) / 10;
+            const meals = Math.round(tdee / 450);
+
+            document.getElementById('resCalories').textContent = Math.round(tdee);
+            document.getElementById('resProtein').textContent = protein;
+            document.getElementById('resCarbs').textContent = Math.max(0, carbs);
+            document.getElementById('resFat').textContent = Math.max(0, fat);
+            document.getElementById('resWater').textContent = water.toFixed(1);
+            document.getElementById('resMeals').textContent = Math.max(3, meals);
+        }
+
+        // ================================================================
+        // ===== CHAT =====
+        // ================================================================
+        const knowledgeBase = [{
+            keywords: ['بنش برس', 'بنش', 'press', 'chest press', 'صدر'],
+            answer: 'لتحسين تمرين البنش برس: 1) أثبت قدميك على الأرض. 2) حافظ على تقوس طفيف في أسفل الظهر. 3) أنزل البار حتى يلامس منتصف الصدر. 4) ادفع بقوة مع الزفير. 5) حافظ على استقامة المعصمين.',
+            source: 'Mussel Clinic - دليل تمارين الصدر'
+        }, {
+            keywords: ['سكوات', 'squat', 'أرجل', 'رجل'],
+            answer: 'لأداء السكوات بشكل صحيح: 1) حافظ على استقامة الظهر. 2) انزل حتى يصبح الفخذ موازياً للأرض أو أقل. 3) وزع الوزن على كامل القدم. 4) ادفع للأعلى من الكعبين. 5) تجنب تقوس الظهر في الأسفل.',
+            source: 'Mussel Clinic - دليل تمارين الأرجل'
+        }, {
+            keywords: ['بروتين', 'احتياج بروتين', 'كم بروتين'],
+            answer: 'يحتاج الرياضي إلى 1.6-2.2 جرام بروتين لكل كيلو من وزن الجسم يومياً. مثال: شخص وزنه 70 كجم يحتاج 112-154 جرام بروتين يومياً. وزع البروتين على 4-6 وجبات، كل وجبة 20-40 جرام.',
+            source: 'Farmistan - التغذية الرياضية'
+        }, {
+            keywords: ['مكملات', 'كرياتين', 'creatine'],
+            answer: 'الكرياتين آمن وفعال عند الالتزام بالجرعة: 3-5 جرام يومياً. يساعد في زيادة القوة والكتلة العضلية. يُنصح بشرب كمية كافية من الماء أثناء تناوله. تجنب الجرعات العالية دون استشارة طبية.',
+            source: 'Farmistan - دليل المكملات الغذائية'
+        }, {
+            keywords: ['ألم كتف', 'كتف', 'shoulder pain', 'إصابة كتف'],
+            answer: 'آلام الكتف أثناء الضغط قد تكون بسبب: 1) ضعف عضلات الكتف الخلفية. 2) التحميل الزائد. 3) تكنيك غير صحيح. الحل: تمارين Face Pulls، تقليل الوزن، والتركيز على الإطالات اليومية. استشر أخصائي علاج طبيعي إذا استمر الألم.',
+            source: 'Mussel Clinic - إصابات الكتف'
+        }, {
+            keywords: ['نوم', 'استشفاء', 'تعافي', 'recovery'],
+            answer: 'للتعافي العضلي الأمثل: 1) نم 7-9 ساعات يومياً. 2) تجنب الكافيين قبل النوم بـ 6 ساعات. 3) خذ حماماً دافئاً قبل النوم. 4) حافظ على درجة حرارة الغرفة باردة (18-20 درجة مئوية). 5) النوم العميق يفرز هرمون النمو المسؤول عن بناء العضلات.',
+            source: 'Mussel Clinic - علم النوم والاستشفاء'
+        }, {
+            keywords: ['كارب', 'كربوهيدرات', 'نشويات', 'طاقة'],
+            answer: 'الكربوهيدرات هي مصدر الطاقة الأساسي للتمرين. يحتاج الرياضي إلى 3-5 جرام كارب لكل كيلو من الوزن يومياً. ركز على الكربوهيدرات المعقدة (الشوفان، الأرز البني، البطاطا الحلوة) قبل التمرين، والسريعة (موز، عسل) بعد التمرين.',
+            source: 'Farmistan - التغذية الرياضية'
+        }, {
+            keywords: ['دهون', 'fat', 'زيوت', 'أوميغا'],
+            answer: 'الدهون الصحية ضرورية لإنتاج الهرمونات (التستوستيرون). احصل على 0.8-1 جرام دهون لكل كيلو من وزنك. ركز على الدهون غير المشبعة (أفوكادو، زيت زيتون، مكسرات، أوميغا 3). تجنب الدهون المشبعة والمتحولة.',
+            source: 'Farmistan - التغذية الصحية'
+        }, {
+            keywords: ['سحب', 'ظهر', 'back', 'lat', 'مجنص'],
+            answer: 'لتطوير عضلات الظهر: 1) ركز على سحب الكتف للأسفل والخلف قبل بدء الحركة. 2) استخدم قبضة مناسبة (عريضة للعرض، ضيقة للسمك). 3) اسحب بالمرفقين وليس باليدين. 4) حافظ على ثبات الجذع. 5) لا تنسى تمارين الـ Face Pulls لصحة الكتف.',
+            source: 'Mussel Clinic - دليل تمارين الظهر'
+        }, {
+            keywords: ['باي', 'bicep', 'عضلة ذات الرأسين', 'تمرجح'],
+            answer: 'لتضخيم البايسبس: 1) ثبّت المرفقين بجانب الجسم. 2) لا تستخدم كتفيك للمساعدة. 3) ركز على الانقباض في الأعلى. 4) أنزل الوزن ببطء (2-3 ثواني) في الشق السلبي. 5) جرب تمارين مختلفة: تمرجح بالبار، هامر، تمرجح مائل.',
+            source: 'Mussel Clinic - دليل تمارين الذراعين'
+        }, {
+            keywords: ['تراي', 'triceps', 'ثلاثية الرؤوس', 'ترايسبس'],
+            answer: 'لتطوير الترايسبس: 1) ركز على تمارين الدفع (Pushdown, Skull Crushers). 2) حافظ على مرفقيك قريبين من الجسم. 3) لا تفرط في تمديد المرفق لحماية المفصل. 4) أضف تمارين فوق الرأس لاستهداف الرأس الطويل.',
+            source: 'Mussel Clinic - دليل تمارين الذراعين'
+        }, {
+            keywords: ['إحماء', 'warm up', 'تسخين'],
+            answer: 'الإحماء الفعال: 1) 5-10 دقائق تمارين خفيفة (مشاية، دراجة). 2) تمارين حركية (دوران الأكتاف، فتح الصدر). 3) أداء التمرينة الرئيسية بوزن خفيف جداً (20-30% من الوزن) لمدة 8-10 تكرارات بطيئة. هذا ينشط المسار العصبي ويمنع الإصابات.',
+            source: 'Mussel Clinic - الإحماء والوقاية'
+        }, {
+            keywords: ['وزن', 'زيادة وزن', 'تضخيم', 'muscle gain'],
+            answer: 'لزيادة الوزن العضلي: 1) تناول سعرات حرارية زائدة عن احتياجك بـ 300-500 سعرة يومياً. 2) تناول بروتين 1.6-2.2 جرام لكل كجم. 3) ركز على التمارين المركبة (سكوات، بنش، سحب). 4) نم 7-9 ساعات. 5) زد الوزن تدريجياً (2.5 كجم أسبوعياً).',
+            source: 'Farmistan - دليل التضخيم العضلي'
+        }, {
+            keywords: ['تنشيف', 'حرق دهون', 'lose weight', 'fat loss'],
+            answer: 'للتنشيف الفعال: 1) احسب سعراتك واخفضها بـ 200-300 سعرة عن احتياجك اليومي. 2) زد البروتين (2-2.5 جرام لكل كجم) للحفاظ على العضلات. 3) أضف تمارين الكارديو 2-3 مرات أسبوعياً. 4) اشرب الماء بكثرة. 5) تجنب السكر المضاف والوجبات المصنعة.',
+            source: 'Farmistan - دليل التنشيف'
+        }, {
+            keywords: ['كارديو', 'cardio', 'حرق', 'دهون'],
+            answer: 'أفضل تمارين الكارديو في الجيم: جهاز المشي (ميلان)، جهاز التجديف، الأوربت تراك، وتمارين وزن الجسم. حافظ على معدل ضربات قلبك بين 60-75% من الحد الأقصى (220 - العمر) لمدة 25-45 دقيقة، 5-6 أيام أسبوعياً.',
+            source: 'Mussel Clinic - دليل الكارديو والحرق'
+        }, {
+            keywords: ['قناة', 'قنوات', 'يوتيوب', 'مصادر', 'تعلم', 'فيديو', 'شرح', 'أعطيني قنوات'],
+            answer: '📺 **قنوات يوتيوب موصى بها حسب التخصص:**\n\n' +
+                '**تمارين وتكنيك (عربي):**\n' +
+                '• تمرين (Tahmeen): https://www.youtube.com/@Tahmeen\n' +
+                '• كابتن ماهر: https://www.youtube.com/@Maherfitness\n\n' +
+                '**تغذية ومكملات (عربي):**\n' +
+                '• د. أحمد عبدالله: https://www.youtube.com/@DrAhmedAbdallah\n\n' +
+                '**علاج طبيعي وإصابات (عربي):**\n' +
+                '• د. رياض الصالح: https://www.youtube.com/@RiyadAlsalih\n\n' +
+                '**تمارين علمية (إنجليزي):**\n' +
+                '• Jeff Nippard: https://www.youtube.com/@JeffNippard\n' +
+                '• Jeremy Ethier: https://www.youtube.com/@JeremyEthier\n\n' +
+                '**علاج طبيعي وتكنيك (إنجليزي):**\n' +
+                '• Squat University: https://www.youtube.com/@SquatUniversity\n\n' +
+                '**برمجة تدريبية (إنجليزي):**\n' +
+                '• Renaissance Periodization: https://www.youtube.com/@RenaissancePeriodization',
+            source: 'Mussel Clinic & Farmistan - مصادر موصى بها'
+        }];
+
+        let chatMessages = [];
+
+        function initChat() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            addBotMessage('👋 أهلاً بك! أنا مساعدك الذكي في التدريب والتغذية. أسألني عن أي تمرين، تكنيك، تغذية، إصابة، أو قنوات يوتيوب موصى بها. إجاباتي موثقة من Mussel Clinic و Farmistan.');
+            addQuickReplies();
+        }
+
+        function addBotMessage(text, source = null) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'chat-msg bot';
+            let html = text.replace(/\n/g, '<br>');
+            if (source) {
+                html += `<span class="source">📌 المصدر: ${source}</span>`;
+            }
+            div.innerHTML = html;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            chatMessages.push({ type: 'bot', text, source });
+        }
+
+        function addUserMessage(text) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'chat-msg user';
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            chatMessages.push({ type: 'user', text });
+        }
+
+        function addQuickReplies() {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'chat-msg bot';
+            const quickText = 'اختر سؤالاً سريعاً:';
+            const buttons = [
+                'كيف أحسن البنش برس؟',
+                'أعطيني قنوات يوتيوب موصى بها',
+                'ألم الكتف أثناء الضغط',
+                'كيف أنام بشكل أفضل؟'
+            ];
+            let html = quickText + '<div class="quick-replies">';
+            buttons.forEach(q => {
+                html += `<button class="quick-reply-btn" onclick="askQuestion('${q}')">${q}</button>`;
+            });
+            html += '</div>';
+            div.innerHTML = html;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function askQuestion(text) {
+            document.getElementById('chatInput').value = text;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addUserMessage(text);
+            input.value = '';
+
+            const container = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-msg bot';
+            typingDiv.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+            typingDiv.id = 'typingIndicator';
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                document.getElementById('typingIndicator')?.remove();
+                const response = findAnswer(text);
+                addBotMessage(response.answer, response.source);
+            }, 600 + Math.random() * 400);
+        }
+
+        function findAnswer(query) {
+            const lowerQuery = query.toLowerCase();
+            let bestMatch = null;
+            let maxScore = 0;
+
+            for (const item of knowledgeBase) {
+                let score = 0;
+                for (const keyword of item.keywords) {
+                    if (lowerQuery.includes(keyword.toLowerCase())) {
+                        score += 10;
+                    }
+                    const words = lowerQuery.split(' ');
+                    for (const word of words) {
+                        if (word.length > 2 && keyword.toLowerCase().includes(word)) {
+                            score += 3;
+                        }
+                    }
+                }
+                if (score > maxScore) {
+                    maxScore = score;
+                    bestMatch = item;
+                }
+            }
+
+            if (bestMatch && maxScore > 5) {
+                return { answer: bestMatch.answer, source: bestMatch.source };
+            } else {
+                return {
+                    answer: 'لم أجد إجابة دقيقة لسؤالك. يُنصح باستشارة أخصائي في Mussel Clinic أو Farmistan للحصول على إجابة موثوقة.',
+                    source: 'نظام المساعدة الذكي'
+                };
+            }
+        }
+
+        function clearChat() {
+            if (confirm('هل تريد مسح المحادثة؟')) {
+                document.getElementById('chatMessages').innerHTML = '';
+                initChat();
+            }
+        }
+
+        // ================================================================
+        // ===== INIT =====
+        // ================================================================
+        window.onload = function() {
+            calculateNeeds();
+            initChat();
+        };
+    </script>
+
+</body>
+</html>
